@@ -1,10 +1,25 @@
 import { FC, useState } from 'react'
 import { APP_NAME } from '@/lib/consts'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
+import dynamic from 'next/dynamic'
+import { VerificationResponse, WidgetProps } from '@worldcoin/id'
+import apiReq from '@/lib/fetcher'
+
+const WorldIDWidget = dynamic<WidgetProps>(() => import('@worldcoin/id').then(mod => mod.WorldIDWidget), { ssr: false })
 
 const Home: FC = () => {
 	const [error, setError] = useState('')
-	const handleClaim = async () => {}
+	const [proof, setProof] = useState(null as null | VerificationResponse)
+	const handleClaim = async () => {
+		const response = await apiReq('/api/claim', { signal: 'my-poap', ...proof })
+		if (response.ok) {
+			const { url } = await response.json()
+			window.location.href = url
+		} else {
+			console.error(await response.json())
+			setError('Error claiming.')
+		}
+	}
 
 	return (
 		<div className="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
@@ -21,11 +36,14 @@ const Home: FC = () => {
 					</div>
 				</div>
 
-				<div className="flex justify-center mt-16"></div>
+				<div className="flex justify-center mt-16">
+					<WorldIDWidget signal="my-poap" actionId={process.env.NEXT_PUBLIC_ACTION_ID} onSuccess={setProof} />
+				</div>
 				<div className="flex justify-center mt-8">
 					<button
 						className="bg-violet-600 text-white rounded-lg px-16 py-4 drop-shadow-md disabled:bg-violet-300 disabled:cursor-not-allowed"
 						onClick={handleClaim}
+						disabled={!proof}
 					>
 						Claim POAP
 					</button>
