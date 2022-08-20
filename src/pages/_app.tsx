@@ -1,4 +1,4 @@
-import 'tailwindcss/tailwind.css'
+import '@/global.css'
 import { ThemeProvider } from 'next-themes'
 import Web3Provider from '@/components/Web3Provider'
 
