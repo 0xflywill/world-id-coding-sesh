@@ -12,7 +12,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { signal, merkle_root, nullifier_hash, proof }: RequestBody = req.body
 
 	const verificationResponse = await apiReq('https://developer.worldcoin.org/api/v1/verify', {
-		...req.body,
+		signal,
+		merkle_root,
+		nullifier_hash,
+		proof,
 		action_id: process.env.NEXT_PUBLIC_ACTION_ID,
 	})
 
