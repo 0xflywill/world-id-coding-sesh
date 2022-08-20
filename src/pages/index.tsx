@@ -1,24 +1,16 @@
 import { FC, useState } from 'react'
 import { APP_NAME } from '@/lib/consts'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
-import dynamic from 'next/dynamic'
-import { VerificationResponse, WidgetProps } from '@worldcoin/id'
-
-const WorldIDWidget = dynamic<WidgetProps>(() => import('@worldcoin/id').then(mod => mod.WorldIDWidget), { ssr: false })
 
 const SIGNAL = 'poap-0xE301'
 const ACTION_ID = 'wid_4e31f348e539ddb9245854b4ce7872f1'
 
 const Home: FC = () => {
 	const [error, setError] = useState('')
-	const [proof, setProof] = useState(null as null | VerificationResponse)
 	const handleClaim = async () => {
 		const response = await fetch('/api/claim', {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ signal: SIGNAL, action_id: ACTION_ID, ...proof }),
+			body: JSON.stringify({ signal: SIGNAL, actionId: ACTION_ID }),
 		})
 		if (response.ok) {
 			const { url } = await response.json()
@@ -45,18 +37,11 @@ const Home: FC = () => {
 				</div>
 
 				<div className="flex justify-center mt-16">
-					<WorldIDWidget
-						signal={SIGNAL}
-						actionId={ACTION_ID}
-						onSuccess={proof => setProof(proof)}
-					></WorldIDWidget>
 				</div>
-
 				<div className="flex justify-center mt-8">
 					<button
 						className="bg-violet-600 text-white rounded-lg px-16 py-4 drop-shadow-md disabled:bg-violet-300 disabled:cursor-not-allowed"
 						onClick={handleClaim}
-						disabled={!proof}
 					>
 						Claim POAP
 					</button>
