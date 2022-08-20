@@ -36,9 +36,11 @@ const Home: FC = () => {
 					</div>
 				</div>
 
-				<div className="flex justify-center mt-14">
+				<div className="flex justify-center mt-16">
+				</div>
+				<div className="flex justify-center mt-8">
 					<button
-						className="bg-violet-600 text-white rounded-lg px-16 py-4 drop-shadow-md"
+						className="bg-violet-600 text-white rounded-lg px-16 py-4 drop-shadow-md disabled:bg-violet-300 disabled:cursor-not-allowed"
 						onClick={handleClaim}
 					>
 						Claim POAP
