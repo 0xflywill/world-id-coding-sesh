@@ -32,7 +32,7 @@ const Home: FC = () => {
 				<div className="flex items-center flex-col mt-8">
 					<img className="w-48" src="/images/poap-image.png" alt="" />
 					<div className="mt-8 text-xl text-bold bg-slate-200 py-4 px-8 dark:bg-neutral-700 rounded-md">
-						You've met flywill.eth at ETHMexico
+						You've met flywill.eth at ETHBogotá
 					</div>
 				</div>
 

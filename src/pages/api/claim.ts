@@ -2,7 +2,7 @@ import apiReq from '@/lib/fetcher'
 import { VerificationResponse } from '@worldcoin/id'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-const POAP_URL = 'https://welook.io/mint/cwb8p5'
+const POAP_URL = 'https://welook.io/mint/l78eic'
 
 type RequestBody = VerificationResponse & { signal: string }
 
@@ -16,7 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		merkle_root,
 		nullifier_hash,
 		proof,
-		action_id: process.env.NEXT_PUBLIC_ACTION_ID,
+		action_id,
 	})
 
 	if (verificationResponse.ok) {
